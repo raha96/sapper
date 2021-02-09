@@ -1,6 +1,6 @@
-#include "satproblem.h"
+#include "sapper.h"
 
-void satproblem::processline (std::string line)
+void sapper::processline (std::string line)
 {
 	if (line != "")
 	{
@@ -54,14 +54,14 @@ void satproblem::processline (std::string line)
 	}
 }
 
-bool satproblem::issat()
+bool sapper::issat()
 {
 	if (!issolved)
 		this->solve();
 	return (solutions.size() > 0);
 }
 
-std::string satproblem::resolve_varname (int varnum)
+std::string sapper::resolve_varname (int varnum)
 {
 	std::string output;
 	if (varnum < this->varnames.size())
@@ -75,7 +75,7 @@ std::string satproblem::resolve_varname (int varnum)
 	return output;
 }
 
-std::string satproblem::listclauses()
+std::string sapper::listclauses()
 {
 	std::stringstream cstr;
 	cstr << "variables: ";
@@ -91,7 +91,7 @@ std::string satproblem::listclauses()
 	return cstr.str();
 }
 
-std::string satproblem::listsolutions()
+std::string sapper::listsolutions()
 {
 	if (!issolved)
 		this->solve();
@@ -107,7 +107,7 @@ std::string satproblem::listsolutions()
 	return cstr.str();
 }
 
-std::string satproblem::printexpression()
+std::string sapper::printexpression()
 {
 	std::stringstream buf;
 	for (int i = 0; i < this->numclause; i++)
@@ -127,7 +127,7 @@ std::string satproblem::printexpression()
 	return buf.str();
 }
 
-std::string satproblem::solutioncsv()
+std::string sapper::solutioncsv()
 {
 	std::stringstream buf;
 	for (int i = 0; i < this->numvars; i++)
@@ -151,7 +151,7 @@ std::string satproblem::solutioncsv()
 	return buf.str();
 }
 
-bool satproblem::evaluate(solution sol)
+bool sapper::evaluate(solution sol)
 {
 	bool satisfied = false;
 	for (int i = 0; i < this->clauses.size(); i++)
@@ -177,7 +177,7 @@ bool satproblem::evaluate(solution sol)
 	return satisfied;
 }
 
-void satproblem::solve()
+void sapper::solve()
 {
 	solution csol;
 	long long int binary_code = 0, bincopy;
@@ -185,6 +185,13 @@ void satproblem::solve()
 		csol.push_back(0);
 	
 	this->solutions.clear();
+
+	using namespace std::chrono;
+	
+	steady_clock::time_point start = steady_clock::now();
+
+	// SAT solution begin
+
 	for (binary_code = 0; binary_code < pow(2, this->numvars); binary_code++)
 	{
 		bincopy = binary_code;
@@ -198,6 +205,20 @@ void satproblem::solve()
 			this->solutions.push_back(csol);
 		}
 	}
+
+	// SAT solution end
+
+	steady_clock::time_point finish = steady_clock::now();
+	duration<double> timespan = duration_cast< duration<double> > (finish - start);
+	runtime = timespan.count();
+
 	this->issolved = true;
+}
+
+double sapper::getruntime()
+{
+	if (issolved)
+		return this->runtime;
+	return -1;
 }
 

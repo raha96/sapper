@@ -1,16 +1,18 @@
-#ifndef __SATSOLVER__
+#ifndef __SAPPER_H__
 
-#define __SATSVOLER__
+#define __SAPPER_H__
 
 #include <string>
 #include <sstream>
 #include <vector>
 #include <cmath>
+#include <chrono>
+#include <ctime>
 
 typedef std::vector<int> clause;
 typedef std::vector<bool> solution;
 
-class satproblem {
+class sapper {
 	public:
 		void processline (std::string line);
 		std::string listclauses();
@@ -20,12 +22,14 @@ class satproblem {
 		bool evaluate(solution sol);
 		std::string printexpression();
 		std::string solutioncsv();
+		double getruntime();
 	private:
 		int numvars, numclause;
 		std::vector<clause> clauses;
 		std::vector<solution> solutions;
 		std::vector<std::string> varnames;
 		bool issolved;
+		double runtime;
 		std::string resolve_varname (int varnum);
 };
 

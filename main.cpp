@@ -1,14 +1,24 @@
 #include <fstream>
 #include <iostream>
-#include "satproblem.h"
+#include "sapper.h"
 
 using namespace std;
 
-satproblem cprob;
+sapper cprob;
 
-int main()
+int main (int argc, char* argv[])
 {
-	fstream fin("input.txt", fstream::in);
+	fstream fin, fout;
+	if (argc > 1)
+		fin.open(argv[1], fstream::in);
+	else
+		fin.open("input.txt", fstream::in);
+	
+	if (argc > 2)
+		fout.open(argv[2], fstream::out);
+	else
+		fout.open("solutions.csv", fstream::out);
+
 	string buf;
 	while (!fin.eof())
 	{
@@ -20,12 +30,12 @@ int main()
 
 	cout << cprob.printexpression() << endl;
 
-	fstream fout("solutions.csv", fstream::out);
-
 	fout << cprob.solutioncsv() << endl;
 
 	fout.close();
 
 	fin.close();
+
+	cout << "Trivial algorithm ran in " << cprob.getruntime() << " seconds." << endl;
 	return 0;
 }

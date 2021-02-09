@@ -1,0 +1,14 @@
+These examples were obtained from https://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html, where they've been published under LGPL.
+
+aim-100-1_6-no-1.cnf			100 variables and 160 clauses.
+aim-50-1_6-yes1-4.cnf		50 variables and 80 clauses.
+bf0432-007.cnf					1040 variables and 3668 clauses.
+dubois20.cnf					60 variables and 160 clauses.
+dubois21.cnf					63 variables and 168 clauses.
+dubois22.cnf					66 variables and 176 clauses.
+hole6.cnf						42 variables and 133 clauses.
+par8-1-c.cnf					64 variables and 254 clauses.
+quinn.cnf						16 variables and 18 clauses.
+simple_v3_c2.cnf				3 variables and 2 clauses.
+zebra_v155_c1135.cnf			155 variables and 1135 clauses.
+

@@ -1,6 +1,5 @@
-# Test files
-input.txt
-solutions.csv
+# Test output files
+*.csv
 
 # Prerequisites
 *.d
